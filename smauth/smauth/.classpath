@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/resources"/>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="var" path="XDB_HOME/lib/xhive.jar"/>
+	<classpathentry kind="var" path="XDB_HOME"/>
+	<classpathentry kind="lib" path="/DDS/lib/dds-gwt-server_10.5.0.jar"/>
+	<classpathentry kind="lib" path="/DDS/lib/dds-server_10.5.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
