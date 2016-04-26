@@ -43,11 +43,11 @@ public class XMLArchivingUserServiceDelegate extends UserServiceImpl {
 	 */
 	public void loginSiteMinderUser(String id, String password, String roleNames, String appRoleLists) {
 		//roleNames= "abc=yes;xyz=;approle=;..."
-		
+		LogCenter.log("roleNamesString = " +roleNames);
 		boolean hasRole = false;
 		String roleName = null;
 		for(String role : appRoleLists.split(";")){
-			if(roleNames.contains(role+"=yes")){
+			if(roleNames.toLowerCase().contains(role+"=yes")){
 				hasRole = true;
 				roleName = role;
 				break;
@@ -55,7 +55,9 @@ public class XMLArchivingUserServiceDelegate extends UserServiceImpl {
 		}
 		if (!hasRole) {
 			LogCenter.log("Could not find role associated with the application");
-			return;
+			if(users.get(id) != null)
+				users.remove(id);
+		    return;
 		}
 		XMLArchivingUserImpl xmlArchivingUser = null;
 		LogCenter.log("Creating XMLArchivingUserImpl instance with role = " + roleName + ", id = " + id);

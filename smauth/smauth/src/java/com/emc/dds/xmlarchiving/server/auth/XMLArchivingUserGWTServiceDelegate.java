@@ -56,18 +56,22 @@ public class XMLArchivingUserGWTServiceDelegate extends UserServiceImpl {
 		String headerValue = ""; 
 		/*
 		//hardcoding
-		if(headerName.equalsIgnoreCase("HTTP_mail"))
+		if(headerName.equalsIgnoreCase("mail"))
 			headerValue = "girida1@stgexcng.medtronic.com";
 		*/	
 		headerValue = this.getThreadLocalRequest().getHeader(headerName);
+		if(headerValue == null){
+			LogCenter.log("header = " + headerName + ", header value = " + headerValue);
+			return headerValue;
+		}
 		headerValue = headerValue.contains("@")?headerValue.split("@")[0]:headerValue;
 		LogCenter.log("header = " + headerName + ", header value = " + headerValue);
 		return headerValue;
 	}
 
 	private String getSiteMinderUserID() {
-		LogCenter.log("In XMLArchivingUserGWTServiceDelegate.getSiteMinderUserID, looking for session header HTTP_mail");
-		String smUserID = getUserID("HTTP_mail");
+		LogCenter.log("In XMLArchivingUserGWTServiceDelegate.getSiteMinderUserID, looking for session header mail");
+		String smUserID = getUserID("mail");
 		if (null == smUserID) {
 			LogCenter.log("Did not find a SiteMinder user id in this HTTP session");
 		} else {
@@ -93,6 +97,8 @@ public class XMLArchivingUserGWTServiceDelegate extends UserServiceImpl {
 			headerValue = "yes";
 		*/
 		headerValue = this.getThreadLocalRequest().getHeader(headerName);
+		if(headerValue == null)
+			headerValue = "";
 		return headerValue;
 	}
 	
@@ -120,6 +126,20 @@ public class XMLArchivingUserGWTServiceDelegate extends UserServiceImpl {
 
 	@Override
 	public boolean login(String id, String password) {
+		
+		System.out.println("Trying to get Header all List - Start");
+		try{
+			Enumeration<String> x = this.getThreadLocalRequest().getHeaderNames();
+			while(x.hasMoreElements()){
+				String y = x.nextElement().toString();
+				System.out.print("\n" + y + "\t-\t" + this.getThreadLocalRequest().getHeader(y));
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		System.out.println("Trying to get Header all List - END");
+		
 		boolean result = false;
 		String siteMinderUser = null;
 		LogCenter.log(" group names string = " + getGroupNames());
